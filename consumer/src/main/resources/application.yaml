@@ -1,6 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/axon-kafka-example
+    username: axon
+    password: axon
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+
 axon:
   serializer:
-    general: jackson
+    general: xstream
   eventhandling:
     processors:
       "[MyProcessor]":
@@ -14,7 +33,7 @@ axon:
     consumer:
       group-id: boot
       bootstrapservers:
-        - kafka:9092
+        - localhost:9092
 
 logging:
   level:

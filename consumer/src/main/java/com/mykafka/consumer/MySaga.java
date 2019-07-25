@@ -3,17 +3,17 @@
  */
 package com.mykafka.consumer;
 
-import com.mykafka.consumer.events.MySagaEndEvent;
-import com.mykafka.consumer.events.MySagaStartEvent;
-
 import org.axonframework.config.ProcessingGroup;
-import org.axonframework.eventhandling.saga.EndSaga;
-import org.axonframework.eventhandling.saga.SagaEventHandler;
-import org.axonframework.eventhandling.saga.SagaLifecycle;
-import org.axonframework.eventhandling.saga.StartSaga;
+import org.axonframework.modelling.saga.EndSaga;
+import org.axonframework.modelling.saga.SagaEventHandler;
+import org.axonframework.modelling.saga.SagaLifecycle;
+import org.axonframework.modelling.saga.StartSaga;
 import org.axonframework.spring.stereotype.Saga;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mykafka.consumer.events.MySagaEndEvent;
+import com.mykafka.consumer.events.MySagaStartEvent;
 
 @Saga
 @ProcessingGroup("MySagaProcessor")
