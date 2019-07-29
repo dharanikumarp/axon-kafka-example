@@ -103,17 +103,17 @@ public class MyTokenStore extends JpaTokenStore implements DisposableBean {
 	@Override
 	public void destroy() {
 		LOGGER.info("MyTokenStore.destroy");
-		if(1 < 10)
-			return;
 		try {
 			RetryPolicy rp = new ExponentialBackoffRetry(10000, 5);
-			CuratorFramework client = CuratorFrameworkFactory.newClient("localhost:2181", rp);
+			CuratorFramework client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", rp);
 			client.start();
 			client.blockUntilConnected();
 
 			DistributedAtomicInteger dAI = new DistributedAtomicInteger(client, "/segment", rp);
-			dAI.decrement();
-
+			AtomicValue<Integer> av = dAI.decrement(); 
+			if (av.succeeded()) {
+				LOGGER.info("segmentId after decrementing " + av.postValue());
+			}
 			client.close();
 			
 		} catch (Exception e) {
