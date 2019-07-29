@@ -3,13 +3,15 @@
  */
 package com.mykafka.consumer;
 
-import com.mykafka.consumer.events.MyEvent;
+import java.lang.management.ManagementFactory;
 
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.mykafka.consumer.events.MyEvent;
 
 /*
  If ProcessingGroup is not set, then the package name is used.
