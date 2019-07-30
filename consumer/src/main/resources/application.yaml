@@ -1,3 +1,9 @@
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+      
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/axon-kafka-example
