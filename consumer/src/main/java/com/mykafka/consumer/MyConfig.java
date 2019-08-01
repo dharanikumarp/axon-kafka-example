@@ -7,6 +7,8 @@ import java.time.Duration;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.common.jpa.EntityManagerProvider;
+import org.axonframework.eventhandling.EventMessage;
+import org.axonframework.eventhandling.async.SequencingPolicy;
 import org.axonframework.eventhandling.tokenstore.jpa.JpaTokenStore;
 import org.axonframework.eventhandling.tokenstore.jpa.JpaTokenStore.Builder;
 import org.axonframework.eventsourcing.eventstore.jdbc.EventSchema;
@@ -25,6 +27,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.mykafka.consumer.tokenstore.MySegmentId;
+import com.mykafka.consumer.tokenstore.MySequencingPolicy;
 import com.mykafka.consumer.tokenstore.MyTokenStore;
 
 /*
@@ -61,6 +65,11 @@ public class MyConfig {
 		return new PostgresSagaSqlSchema();
 	}
 
+	@Bean
+	public SequencingPolicy<? super EventMessage<?>> mySequencingPolicy() {
+		return new MySequencingPolicy<>();
+	}
+
 	@ConditionalOnMissingBean
 	@Bean
 	public KafkaMessageConverter<String, byte[]> kafkaMessageConverter(
@@ -70,23 +79,15 @@ public class MyConfig {
 
 	@Bean
 	public Builder jpaTokenStoreBuilder(Serializer serializer, EntityManagerProvider emp) {
-		System.out.println("MyConfig.jpaTokenStoreBuilder");
-		return JpaTokenStore.builder().entityManagerProvider(emp).serializer(serializer).claimTimeout(Duration.ofMillis(700));
+		return JpaTokenStore.builder().entityManagerProvider(emp).serializer(serializer)
+				.claimTimeout(Duration.ofMillis(700));
 	}
 
 	@Bean
-	public MyTokenStore myTokenStore(Serializer serializer, EntityManagerProvider emp, Builder builder) {
-		System.out.println("MyConfig.myTokenStore");
-		MyTokenStore tokenStore = new MyTokenStore(builder, serializer, emp);
+	@Autowired
+	public MyTokenStore myTokenStore(Serializer serializer, EntityManagerProvider emp, Builder builder,
+			MySegmentId mySegmentId) {
+		MyTokenStore tokenStore = new MyTokenStore(builder, serializer, emp, mySegmentId);
 		return tokenStore;
 	}
-
-//	@Bean
-//	public JpaTokenStore jpaTokenStore(Serializer serializer, EntityManagerProvider emp, Builder builder) {
-//	JpaTokenStore jpaTokenStore =
-	// builder.entityManagerProvider(emp).serializer(serializer)
-//					.claimTimeout(Duration.ofMillis(500)).build();
-//		System.out.println("Inside jpaTokenStore bean initialization");
-//		return builder.build();
-//	}
 }
