@@ -1,8 +1,6 @@
 package com.mykafka.consumer.tokenstore;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -26,7 +24,6 @@ public class MyTokenStore extends JpaTokenStore {
 	private EntityManagerProvider entityManagerProvider;
 	private Serializer serializer;
 	private int segmentId = 0;
-	private Set<String> processorNames = new HashSet<>();
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyTokenStore.class);
 
@@ -53,8 +50,6 @@ public class MyTokenStore extends JpaTokenStore {
 			entityManager.persist(token);
 		}
 		entityManager.flush();
-
-		processorNames.add(processorName);
 	}
 
 	@Override

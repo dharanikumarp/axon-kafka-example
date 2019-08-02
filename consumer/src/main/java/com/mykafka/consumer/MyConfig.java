@@ -3,7 +3,6 @@
  */
 package com.mykafka.consumer;
 
-import java.time.Duration;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.common.jpa.EntityManagerProvider;
@@ -79,8 +78,7 @@ public class MyConfig {
 
 	@Bean
 	public Builder jpaTokenStoreBuilder(Serializer serializer, EntityManagerProvider emp) {
-		return JpaTokenStore.builder().entityManagerProvider(emp).serializer(serializer)
-				.claimTimeout(Duration.ofMillis(700));
+		return JpaTokenStore.builder().entityManagerProvider(emp).serializer(serializer);
 	}
 
 	@Bean
