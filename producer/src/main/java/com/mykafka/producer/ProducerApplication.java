@@ -21,7 +21,7 @@ import com.mykafka.consumer.events.MySagaStartEvent;
 @SpringBootApplication(exclude = KafkaAutoConfiguration.class)
 public class ProducerApplication implements CommandLineRunner {
 
-	public static final boolean USE_CONSOLE_INPUT = true;
+	public static final boolean USE_CONSOLE_INPUT = false;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProducerApplication.class);
 	@Autowired
@@ -62,8 +62,8 @@ public class ProducerApplication implements CommandLineRunner {
 			br.close();
 
 		} else {
-			for (int i = 100; i <= 20; i++) {
-				TimeUnit.SECONDS.sleep(2);
+			for (int i = 0; i < 20; i++) {
+				TimeUnit.SECONDS.sleep(3);
 				sender.send(new MyEvent(String.format("Hi there %d %s", i, new Date())));
 			}
 		}

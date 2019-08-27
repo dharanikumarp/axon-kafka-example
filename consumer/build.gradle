@@ -5,20 +5,12 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
 
 	implementation("org.apache.curator:curator-recipes:2.13.0")
-	//implementation('org.axonframework:axon-messaging:4.1.2')
-	//implementation('javax.validation:validation-api:2.0.1.Final')
-	//implementation('commons-validator:commons-validator:1.4.0')
-	//implementation('com.vladmihalcea:hibernate-types-52')
 	implementation('org.hibernate.validator:hibernate-validator')
-//	implementation('javax.el:el-api:2.2.1-b04')
 	runtimeOnly('org.glassfish:javax.el:3.0.1-b11')
-	//implementation("javax.validation:validation-api")
 	implementation("org.apache.kafka:kafka-clients:2.3.0")
 	implementation("org.apache.commons:commons-lang3:3.8.1")
 	implementation("commons-validator:commons-validator:1.6")
 	implementation("com.vladmihalcea:hibernate-types-52:1.0.0")
-	//implementation("org.axonframework:axon-modelling:4.1.2")
-	//implementation("org.axonframework:axon-messaging:4.0-RC2")
 	implementation("org.axonframework.extensions.kafka:axon-kafka:4.0-RC2")
 	implementation("org.axonframework:axon-spring-boot-starter:4.1.2") {
 		exclude module: "axon-server-connector"
@@ -31,7 +23,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	
 	implementation project(":pruducer-events")
-	//testCompile group: 'junit', name: 'junit', version: '4.12'
 	runtimeOnly("org.postgresql:postgresql")
 }
 
