@@ -1,1 +1,8 @@
 rootProject.name = 'consumer'
+
+sourceControl {
+    gitRepository("https://github.com/AxonFramework/extension-kafka.git") {
+        producesModule("org.axonframework.extensions.kafka:axon-kafka")
+        producesModule("org.axonframework.extensions.kafka:axon-kafka-spring-boot-starter")
+    }
+}

@@ -24,11 +24,11 @@ import com.mykafka.consumer.events.MyEvent;
 @ProcessingGroup("MyProcessor")
 public class MyEventEventHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MyEventEventHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyEventEventHandler.class);
 
-  @EventHandler
-  public void handleMyEvent(MyEvent myEvent){
-    LOGGER.info("got the event {}", myEvent);
-  }
+    @EventHandler
+    public void handleMyEvent(MyEvent myEvent) {
+        LOGGER.info("got the event {}", myEvent);
+    }
 
 }

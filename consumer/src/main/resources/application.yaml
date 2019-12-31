@@ -3,7 +3,6 @@ management:
     shutdown:
       enabled: true
       
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/axon-kafka-example
@@ -28,12 +27,10 @@ axon:
     general: xstream
   eventhandling:
     processors:
-      "[MyProcessor]":
-        source: kafkaMessageSource
-        mode: TRACKING
+      MyProcessor:
+        mode: subscribing
         threadCount: 1
         batchSize: 1
-        sequencingPolicy: MySequencingPolicy
   kafka:
     clientid: myconsumer
     defaulttopic: mydefaulttopic

@@ -21,8 +21,6 @@ import com.mykafka.consumer.events.MySagaStartEvent;
 @SpringBootApplication(exclude = KafkaAutoConfiguration.class)
 public class ProducerApplication implements CommandLineRunner {
 
-	public static final boolean USE_CONSOLE_INPUT = true;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProducerApplication.class);
 	@Autowired
 	private Sender sender;
@@ -37,38 +35,13 @@ public class ProducerApplication implements CommandLineRunner {
 		String processName = ManagementFactory.getRuntimeMXBean().getName();
 		String pid = processName.substring(0, processName.indexOf("@"));
 		LOGGER.info("pid {}", pid);
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(1);
 
 		LOGGER.info("Start sending");
-		final long processId = Long.parseLong(pid);
-		sender.send(new MySagaStartEvent(processId));
-
-		if (USE_CONSOLE_INPUT) {
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String line = null;
-			int i = 0;
-			LOGGER.info("Waiting for input");
-			while ((line = br.readLine()) != null) {
-				line = line.trim();
-				if (line.equals("send")) {
-					sender.send(new MyEvent(String.format("Hi there %d %s", i++, new Date())));
-				} else {
-					break;
-				}
-				LOGGER.info("Waiting for input");
-			}
-
-			br.close();
-
-		} else {
-			for (int i = 100; i <= 20; i++) {
-				TimeUnit.SECONDS.sleep(2);
-				sender.send(new MyEvent(String.format("Hi there %d %s", i, new Date())));
-			}
+		for (int i = 1; i <= 20; i++) {
+			TimeUnit.SECONDS.sleep(2);
+			sender.send(new MyEvent(String.format("Hi there %d %s", i, new Date())));
 		}
-
-		sender.send(new MySagaEndEvent(processId));
 		LOGGER.info("Send completed");
 	}
 }
